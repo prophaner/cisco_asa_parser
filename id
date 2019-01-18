@@ -1,0 +1,202 @@
+Authentication DB
+User:
+	id = Column(Integer, primary_key=True)			# UserID used as PK for all DB
+    email = Column(Text, unique=True)				# Registration email
+    _password = Column(Text)						# Hashed password
+
+
+{{ID}} DB
+------------------------BASE------------------------------------------------
+Name:
+	id = Column(Integer, primary_key=True)
+	first_name = Column(Text)
+	middle_name = Column(Text)
+	last_name = Column(Text)
+	legal = Column(Boolean)							# Is this a legal name?
+	current = Column(Boolean)						# Is this name current?
+	priority = Column(Integer)
+	protection = Column(Boolean)
+	tags = Column(Array)
+
+Phone:
+	id = Column(Integer, primary_key=True)
+	phone = Column(Text, unique=True)				# Phone Number stored in Text
+	priority = Column(Integer)						# Priority of the row starting in 0
+	protection = Column(Boolean)					# Protected = Hidden and secured
+	tags = Column(Array)							# Tags for the Row
+
+Gender:
+	id = Column(Integer, primary_key=True)
+	gender = Column(Date)
+	protection = Column(Boolean)
+	tags = Column(Array)
+
+DOB:
+	id = Column(Integer, primary_key=True)
+	dob = Column(Date)
+	protection = Column(Boolean)
+	tags = Column(Array)
+
+Height:
+	id = Column(Integer, primary_key=True)
+	ft = Column(Integer)
+	in = Column(Integer)
+	date = Column(Date)
+	priority = Column(Integer)
+	protection = Column(Boolean)
+	tags = Column(Array)
+
+Weight:
+	id = Column(Integer, primary_key=True)
+	pounds = Column(Text)
+	date = Column(Date)
+	priority = Column(Integer)
+	protection = Column(Boolean)
+	tags = Column(Array)
+
+Eyes:
+	id = Column(Integer, primary_key=True)
+	color = Column(Text)
+	date = Column(Date)
+	protection = Column(Boolean)
+	tags = Column(Array)
+	
+Hair:
+	id = Column(Integer, primary_key=True)
+	color = Column(Text)
+	date = Column(Date)
+	protection = Column(Boolean)
+	tags = Column(Array)
+
+
+------------------------COMPOUNDS------------------------------------------------
+Address:
+	id = Column(Integer, primary_key=True)
+	address_text = Column(Text)						# Full text for the address
+	address_number = Column(Text)
+	address_street = Column(Text)
+	address_district = Column(Text)
+	address_county = Column(Text)
+	address_postal = Column(Text)
+	address_country = Column(Text)
+	address_coordinates_lat = Column(Text)
+	address_coordinates_lon = Column(Text)
+	checked = Column(Boolean)						# Checked with an address database like Google
+	converted = Column(Boolean)						# Checked if address has been converted from Text to Parse mode
+	residence_type = Helpers.ResidenceTypes.id		# Own, Rent, Sublet, Lodge
+	residence_use = Helpers.ResidenceUse.id			# NONE, primary residence, rental, unused << If residence_type == Own
+	priority = Column(Integer)
+	protection = Column(Boolean)
+	tags = Column(Array)
+
+SSN:
+	id = Column(Integer, primary_key=True)
+	ssn = Column(Text)								# SSN
+	name = Name.id									# Points at the Name Table. Create a new one if not there
+	image = Column(Upload)							# Upload a new picture
+	protection = Column(Boolean)
+	tags = Column(Array)
+
+DL:
+	id = Column(Integer, primary_key=True)
+	dln = Column(Text)								# DL number
+	state = Helpers.State.id
+	class = Column(Text)							# DL class
+	name = Name.id
+	address = Address.id
+	dob = DOB.id
+	hair = Hair.id
+	eyes = Eyes.id
+	weight = Weight.id
+	sex = Gender.id
+	issued = Column(Date)
+	expires = Column(Date)
+	rest = Column(Text)
+	endorse = Column(Text)
+	replaced = Column(Date)
+	image = Column(Upload)
+	converted = Column(Boolean)						# Checked if ID has been converted from image to Parse mode
+	priority = Column(Integer)
+	protection = Column(Boolean)
+	tags = Column(Array)
+
+Vehicle: # Vehicle should have only the Title and Registration Links
+	id = Column(Integer, primary_key=True)
+	registration = Column(Image)
+	title = Column(Image)
+	registration_address = Address.id
+	registration_owner_name = Name.id
+	plate = Column(Text)
+	decal = Column(Text)
+	expires = Column(Text)
+	year = Column(Text)
+	make = Column(Text)
+	model = Column(Text)
+	body = Column(Text)
+	color = Column(Text)
+	vin = Column(Text)
+	registration_tax = Column(Text)
+	class_code = Column(Text)
+	tax_months = Column(Text)
+	date_issued = Column(Text)
+	plate_issued = Column(Text)
+	use = Column(Text)
+	miles = Column(Text)
+	weight = Column(Text)
+	priority = Column(Integer)
+	protection = Column(Boolean)
+	tags = Column(Array)
+
+Insurance:
+	id = Column(Integer, primary_key=True)
+	carrier = Helpers.InsuranceCarriersPlans.id
+	name = Name.id
+	group_name = 
+	group_number = 
+	effective_date = 
+	insurance_id = 
+	priority = Column(Integer)
+	protection = Column(Boolean)
+	tags = Column(Array)
+
+Voter:
+	id = Column(Integer, primary_key=True)
+	state = Column(State)
+	name = Name.id
+	address = Address.id
+	registration_date = Column(Date)
+	dob = DOB.id
+	Polling_location = Column(Address)
+	precinct_no = Column(Text)
+	congress = Column(Text)
+
+Employment:
+	id = Column(Integer, primary_key=True)
+	name = Name.id
+	company = Column(Text)
+	company_address = Address.id
+	company_phone = Phone.id
+	employment_location = Address.id
+	start_date = Column(Date)
+	end_date = Column(Date)
+	job_title = Column(Text)
+	salary_type = Column(Text)						#Yearly, Monthly, Hourly
+	salary = Column(Integer)
+	job_description = Column(Text)
+	manager_name = Column(Text)
+	manager_phone = Phone.id
+	remote = Column(Boolean)
+	priority = Column(Integer)
+	protection = Column(Boolean)
+	tags = Column(Array)
+
+Education:
+	id = Column(Integer, primary_key=True)
+	
+	
+Helpers DB
+	Cities DB: https://simplemaps.com/data/us-cities
+	ResidenceTypes: Own, Rent, Sublet, Lodge
+	InsuranceCarriersPlans: list of insurance carriers with plans
+	
+	
